@@ -1,0 +1,537 @@
+\documentclass[11pt]{article}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern,amsmath,amssymb,amsthm,booktabs,array,longtable}
+\usepackage[margin=1in]{geometry}
+\usepackage[colorlinks=true,urlcolor=blue,citecolor=blue,linkcolor=blue]{hyperref}
+\newtheorem{theorem}{Theorem}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{lemma}[theorem]{Lemma}
+\title{Bounded-error asymptotics for Bern\'ath's conjecture:\\
+OEIS A400645, revision 21, COMMENTS,\\
+and its rounded-norm siblings}
+\author{Haobo Ma\\\small ChronoAI Pte Ltd, Singapore
+\and Wenlin Zhang\\\small National University of Singapore\\
+\small ChronoAI Pte Ltd, Singapore}
+\date{November 9, 2026}
+\begin{document}
+\maketitle
+\begin{abstract}
+For Bern\'ath's consecutive-ratio conjecture in OEIS A400645,
+revision 21, COMMENTS, we prove the stronger bounded-error asymptotic
+$a_n=c\lambda^n+O(1)$ with $c>0$, where $\lambda$ is the largest real
+root of $x^8-x^6-x^4-x^2+1$, namely $1.3122819079\ldots$.
+The squared terms satisfy a linear recurrence with a controlled rounding
+error. A finite seed bounds its entire normalized error tail and ensures
+a positive leading coefficient; a three-coordinate contraction then gives
+an exponential asymptotic. The same error analysis proves the ratio
+assertions for A063827 and A400644, and extends them to nondecreasing
+initial data. We also prove the increasing-sequence conjecture in
+A289916 and recover its limiting ratio, identified in A289917.
+\end{abstract}
+
+\section{The statement and its algebraic constant}
+Bern\'ath's sequence \cite{bernath} is defined, with positive indexing, by
+\begin{equation}\label{eq:rec}
+ a_1=a_2=a_3=0,\quad a_4=1,\qquad
+ a_{n+1}=\operatorname{round}\sqrt{s_n},\qquad
+ s_n=a_n^2+a_{n-1}^2+a_{n-2}^2-a_{n-3}^2\quad(n\ge4).
+\end{equation}
+Here rounding means the nearest integer. An integer radicand cannot have
+a half-integer square root, so tie conventions are immaterial.
+The COMMENTS field of revision 21 says ``Numerical evidence suggests
+that the ratio of consecutive terms'' has limit $\sqrt{\mathrm{A289917}}$
+and identifies it as the largest real root of
+$x^8-x^6-x^4-x^2+1$. We establish that limit,
+including existence and positivity of its leading exponential term.
+
+Set
+\begin{equation}\label{eq:constant}
+ r=\frac{1+\sqrt{13}+\sqrt{2\sqrt{13}-2}}4,
+ \qquad \lambda=\sqrt r,\qquad Q(y)=y^4-y^3-y^2-y+1.
+\end{equation}
+The radical for $r$ is recorded by V\'aclav Kotesovec (2021), and its
+largest-root characterization by Linas Vepstas (2024), in A289917
+\cite{constant}, revision 48, FORMULA. Both concern the algebraic
+constant, rather than the rounded recurrence \eqref{eq:rec}.
+For completeness, put $\beta=(1+\sqrt{13})/2$. Then
+\[
+ Q(y)=(y^2-\beta y+1)(y^2+(\beta-1)y+1).
+\]
+The first factor has roots $r$ and $r^{-1}$; the second has two distinct
+complex-conjugate roots of modulus one, because $0<\beta-1<2$.
+Thus $r$ is the largest real root of $Q$, and $\lambda$ is the largest
+real root of $Q(x^2)$. The elementary bounds
+\begin{equation}\label{eq:rbound}
+ \frac{17}{10}<r<\frac74
+\end{equation}
+follow from $18/5<\sqrt{13}<29/8$ and
+$11/5<\sqrt{2\sqrt{13}-2}<19/8$.
+
+\begin{theorem}\label{thm:main}
+The recurrence \eqref{eq:rec} defines a unique nonnegative integer
+sequence. It is nondecreasing and positive from index four. There is a
+constant $c>0$ such that
+\[
+ a_n\sim c\lambda^n,\qquad
+ \lim_{n\to\infty}\frac{a_{n+1}}{a_n}=\lambda.
+\]
+In particular, the limit asserted in A400645 is the largest real root of
+$x^8-x^6-x^4-x^2+1$.
+\end{theorem}
+
+\section{Rounding estimates and a positive leading coefficient}
+Assume the terms through $a_n$ are nonnegative and nondecreasing. Since
+$a_{n-2}\ge a_{n-3}$, one has $s_n\ge a_n^2$. Hence the next term exists
+and is at least the integer $a_n$. Induction proves existence,
+monotonicity and positivity; uniqueness follows from the deterministic
+recurrence and the absence of ties.
+Also $a_{n-2}^2\le a_na_{n-1}$, so
+\[
+ s_n\le (a_n+a_{n-1})^2,\qquad
+ a_{n+1}\le a_n+a_{n-1}\quad(n\ge4).
+\]
+With $q=5/3$, the latter inequality gives, for $m\ge4$ and $j\ge0$,
+\begin{equation}\label{eq:growth}
+ a_{m+j}\le 2a_m q^j.
+\end{equation}
+Indeed, the cases $j=0,1$ follow from monotonicity, and the induction
+step uses $q^2>q+1$.
+
+Write $t=\sqrt{s_n}$ and $\delta=a_{n+1}-t$, so $|\delta|<1/2$.
+The rounding error in the squares satisfies
+\begin{equation}\label{eq:error}
+ |a_{n+1}^2-s_n|
+ \le t+\tfrac14\le 2a_n\qquad(n\ge4).
+\end{equation}
+Here $s_n\le3a_n^2$, $\sqrt3<7/4$, and $a_n\ge1$ imply the last
+inequality. This estimate controls the rounding error by a quantity
+growing more slowly than $r^n$.
+
+Shift indices by setting, for $j\ge0$,
+\[
+ b_j=a_{j+23}^2,\quad
+ e_j=b_{j+4}-b_{j+3}-b_{j+2}-b_{j+1}+b_j,
+\]
+and define the scalar projection
+\begin{equation}\label{eq:projection}
+ P_j=b_{j+3}+(r-1)b_{j+2}+(r^2-r-1)b_{j+1}-\frac{b_j}{r}.
+\end{equation}
+The equation $Q(r)=0$ gives the exact identity
+\begin{equation}\label{eq:step}
+ P_{j+1}=rP_j+e_j.
+\end{equation}
+Combining \eqref{eq:growth} and \eqref{eq:error} yields
+$|e_j|\le4a_{26}q^j$. Therefore the absolutely convergent series
+\begin{equation}\label{eq:U}
+ U=P_0+\sum_{j=0}^{\infty}\frac{e_j}{r^{j+1}}
+   =\lim_{j\to\infty}\frac{P_j}{r^j}
+\end{equation}
+has the tail bound
+\begin{equation}\label{eq:tail}
+ |U-P_0|\le\frac{4a_{26}}{r-q}<120a_{26},
+\end{equation}
+because $r-q>1/30$.
+
+It remains essential to show that $U$ is positive. All coefficients
+$r-1$ and $r^2-r-1$ in \eqref{eq:projection} are positive. Monotonicity
+gives $b_j\le b_{j+3}$, so
+\[
+ P_j\ge (1-r^{-1})b_{j+3}>\frac7{17}b_{j+3}.
+\]
+The finite seed is $a_{26}=324$. To make its exact evaluation transparent,
+the initial terms, grouped by their indices, are
+\[
+\begin{array}{c|rrrrrrrrrrrrr}
+ n&1&2&3&4&5&6&7&8&9&10&11&12&13\\\hline
+ a_n&0&0&0&1&1&1&2&2&3&4&5&7&9\\[2pt]
+ n&14&15&16&17&18&19&20&21&22&23&24&25&26\\\hline
+ a_n&12&16&21&28&37&48&63&83&109&143&188&247&324
+\end{array}
+\]
+Every step uses only integer arithmetic: if $k=\lfloor\sqrt{s}\rfloor$,
+the rounded value is $k+1$ precisely when $s>k^2+k$.
+Consequently \eqref{eq:tail} implies
+\begin{equation}\label{eq:positive}
+ U>\frac7{17}\,324^2-120\cdot324
+   =\frac{73872}{17}>0.
+\end{equation}
+Thus a finite calculation supplies a quantitative lower bound for the
+entire infinite error series, not just numerical evidence of growth.
+
+\section{Convergence of the normalized squares}
+Set
+\[
+ A=\frac{r-1}{r},\quad B=\frac{r^2-r-1}{r^2},\quad C=\frac1{r^4}.
+\]
+The bounds \eqref{eq:rbound} imply
+\begin{equation}\label{eq:ABC}
+ 0<A<\tfrac12,\qquad 0<B<\tfrac15,\qquad 0<C<\tfrac18.
+\end{equation}
+For the bound on $B$, use that $1-1/r-1/r^2$ is increasing and at $r=7/4$
+equals $5/49<1/5$; the other two bounds are immediate.
+Define
+\[
+ x_j=\frac{b_j}{r^j},\qquad
+ L=\frac{U}{r^3(1+A+B-C)}>0,\qquad d_j=x_j-L.
+\]
+The positivity of the denominator follows from $1+A+B-C>7/8$.
+Dividing \eqref{eq:projection} by $r^{j+3}$ gives
+\[
+ d_{j+3}=f_j-Ad_{j+2}-Bd_{j+1}+Cd_j,\qquad
+ f_j=\frac{P_j}{r^{j+3}}-\frac U{r^3}\longrightarrow0.
+\]
+For the weighted absolute sum
+\[
+ M_j=|d_{j+2}|+\frac25|d_{j+1}|+\frac3{20}|d_j|,
+\]
+the triangle inequality and \eqref{eq:ABC} give
+\begin{equation}\label{eq:contraction}
+ M_{j+1}\le\frac9{10}M_j+|f_j|.
+\end{equation}
+Indeed, the coefficients of $|d_{j+2}|$, $|d_{j+1}|$ and $|d_j|$
+are at most $9/10$, $7/20\le(9/10)(2/5)$ and
+$1/8\le(9/10)(3/20)$, respectively.
+To see that \eqref{eq:contraction} implies $M_j\to0$, fix
+$\varepsilon>0$ and choose $J$ with $|f_j|\le\varepsilon/10$ for $j\ge J$.
+Iteration gives
+$M_{J+k}\le(9/10)^kM_J+\varepsilon$; taking a limit superior and then
+letting $\varepsilon\downarrow0$ proves the assertion.
+Hence $d_j\to0$, and
+\[
+ \frac{a_{j+23}^2}{r^j}\longrightarrow L>0.
+\]
+Taking nonnegative square roots proves
+$a_n\sim c\lambda^n$ with $c=\sqrt L\,\lambda^{-23}>0$.
+More explicitly, division of successive normalized squares gives
+$a_{n+1}^2/a_n^2\to r$; positivity then gives
+$a_{n+1}/a_n\to\sqrt r$. This completes the proof of
+Theorem~\ref{thm:main}.
+
+\section{Bounded error and positive-norm siblings}
+\begin{lemma}\label{lem:forcing}
+Let a monic real polynomial $p$ have distinct roots, a root $R>1$,
+and all its other roots of modulus at most one. If a real sequence
+obeys the recurrence with characteristic polynomial $p$, with additive
+error $e_j=O(q^j)$ for some $1<q<R$, then
+\[
+ b_j=L R^j+O(q^j)
+\]
+for some real $L$. If $b_j\sim L R^j$ with $L>0$ and the error also
+satisfies $e_j=O(b_j^{1/2})$, then
+$b_j=L R^j+O(R^{j/2})$.
+\end{lemma}
+\begin{proof}
+The companion matrix is diagonalizable over $\mathbb C$.
+Its eigenvectors form a Vandermonde matrix, whose determinant is a
+product of nonzero root differences. In these coordinates each
+component satisfies $v_{j+1}=\zeta v_j+\kappa e_j$, whence
+\[
+ v_j=\zeta^jv_0+\kappa\sum_{k<j}\zeta^{j-1-k}e_k.
+\]
+For $|\zeta|\le1$ the sum is $O(q^j)$. For $\zeta=R$, the series
+$\sum_{k\ge0}e_k/R^{k+1}$ converges; replacing the finite sum by that
+series leaves a tail of size $O(q^j)$. Transforming back proves the
+first assertion. Under the additional hypotheses $e_j=O(R^{j/2})$,
+the same argument applies with $q=\sqrt R$. The resulting leading
+coefficient is the same $L$, since division by $R^j$ determines it
+uniquely.
+\end{proof}
+
+\begin{corollary}\label{cor:bounded}
+For the sequence in Theorem~\ref{thm:main},
+$a_n=c\lambda^n+O(1)$, and
+$a_{n+1}/a_n=\lambda+O(\lambda^{-n})$.
+\end{corollary}
+\begin{proof}
+Theorem~\ref{thm:main} and \eqref{eq:error} give
+$e_j=O(r^{j/2})$ for its shifted squared sequence.
+The factorization of $Q$ and Lemma~\ref{lem:forcing} give
+$a_n^2=c^2r^n+O(r^{n/2})$. Rationalizing the square-root difference
+gives $|a_n-c\lambda^n|=O(1)$, since its denominator is at least
+$c\lambda^n$. Division of consecutive terms gives the ratio estimate.
+\end{proof}
+
+\begin{corollary}\label{cor:large}
+Replace the initial tuple in \eqref{eq:rec} by any nondecreasing
+nonnegative integer tuple with $a_4\ge292$. The resulting signed
+recurrence satisfies $a_n=c\lambda^n+O(1)$ for some $c>0$.
+\end{corollary}
+\begin{proof}
+Existence, monotonicity and \eqref{eq:growth}--\eqref{eq:error} hold
+unchanged. Set $b_j=a_{j+1}^2$ and $A=a_4$. The projection
+\eqref{eq:projection} has $P_0>(7/17)A^2$, while its entire error
+tail is less than $120A$. Since
+$(7/17)292^2-120\cdot292=1168/17>0$, the normalized projection has
+positive limit for every $A\ge292$. The contraction proof and
+Corollary~\ref{cor:bounded} now apply with this index shift.
+\end{proof}
+
+\begin{corollary}\label{cor:norm}
+Let $m=2$ or $3$ and start with nondecreasing nonnegative integer data
+$x_0,\ldots,x_{m-1}$. Define
+\[
+ x_{n+m}=\operatorname{round}\sqrt{\sum_{i=0}^{m-1}x_{n+i}^2}.
+\]
+For $m=2$ assume $x_1\ge2$; for $m=3$ assume $x_2\ge1$.
+If $R_m$ is the positive root above one of
+$p_m(y)=y^m-y^{m-1}-\cdots-y-1$, then for some $C>0$,
+\[
+ x_n=C R_m^{n/2}+O(1),\qquad
+ \frac{x_{n+1}}{x_n}=\sqrt{R_m}+O(R_m^{-n/2}).
+\]
+In particular, the asserted limits in A063827, revision 12, COMMENTS,
+and A400644, revision 28, COMMENTS, hold for their specified initial
+data: $\sqrt{(1+\sqrt5)/2}$ and the square root of the tribonacci
+constant, respectively.
+\end{corollary}
+\begin{proof}
+The sequence exists uniquely and remains nondecreasing, since the
+radicand is at least the square of the last term. If it were bounded,
+it would eventually be a constant integer $K$. The hypotheses imply
+$(\sqrt m-1)K>1/2$, contradicting
+$\operatorname{round}(\sqrt m K)=K$. Thus $x_n\to\infty$.
+
+For $m=2$ the roots are $R_2=(1+\sqrt5)/2>\sqrt2$ and $-R_2^{-1}$.
+For $m=3$, the cubic has just one real root $R_3>\sqrt3$:
+its extrema at $-1/3$ and $1$ both have negative values, and
+$p_3(\sqrt3)=2\sqrt3-4<0$. The other two roots are conjugate and
+have modulus $R_3^{-1/2}<1$, by their product. All these roots are
+distinct. Choose $\sqrt m<q<R_m$ and a late index $N$ such that
+$\sqrt m+1/(2x_N)\le q$ and
+$A=x_{N+m-1}>2/(R_m-q)$. Then
+$x_{N+m-1+j}\le A q^j$ by induction.
+
+Set $b_j=x_{N+j}^2$ and
+$e_j=b_{j+m}-\sum_{i<m}b_{j+i}$.
+The rounding bound gives
+$|e_j|\le\sqrt m\,x_{N+j+m-1}+1/4\le2Aq^j$.
+Writing $R=R_m$, use the positive-coefficient projection
+\[
+ P_j=\begin{cases}
+ b_{j+1}+(R-1)b_j,&m=2,\\
+ b_{j+2}+(R-1)b_{j+1}+R^{-1}b_j,&m=3.
+ \end{cases}
+\]
+Direct substitution of $p_m(R)=0$ gives $P_{j+1}=RP_j+e_j$.
+Therefore
+\[
+ U=\lim_j P_j/R^j
+ \ge A^2-\frac{2A}{R-q}>0.
+\]
+Lemma~\ref{lem:forcing} gives $b_j=L R^j+O(q^j)$, so
+$U=L p_m'(R)$. The derivative is positive at the largest real root,
+hence $L>0$. Now $e_j=O(b_{j+m-1}^{1/2})=O(R^{j/2})$.
+The second part of the lemma and rationalization give the asserted
+bounded error and ratio estimate. A063827 starts at $(1,2)$;
+A400644 starts at $(0,0,1)$ with positive indexing, so both satisfy
+the hypotheses.
+\end{proof}
+
+\section{Algebraic companions and source coverage}
+\begin{corollary}
+For every fixed integer $h\ge0$, $a_{n+h}/a_n\to\lambda^h$, and
+$\log(a_n)/n\to\log\lambda$.
+\end{corollary}
+\begin{proof}
+Both statements follow directly from $a_n\sim c\lambda^n$ with $c>0$;
+the logarithm is defined for $n\ge4$.
+\end{proof}
+
+The unrounded companion in A116732 \cite{linear} has
+$u_0=u_1=u_2=0$, $u_3=1$, and
+$u_n=u_{n-1}+u_{n-2}+u_{n-3}-u_{n-4}$ for $n\ge4$.
+Its generating function is $z^3/Q(z)$, as recorded in its FORMULA field.
+The four simple roots of $Q$ described above give, by partial fractions,
+\[
+ u_n=\frac{r^n}{Q'(r)}+O(1),\qquad
+ \frac{u_{n+1}}{u_n}\longrightarrow r=\lambda^2.
+\]
+For the coefficient, at $z=1/r$ the derivative of $Q(z)=z^4Q(1/z)$
+is $-Q'(r)/r^2$, so the coefficient of $(1-rz)^{-1}$ in $z^3/Q(z)$
+is $1/Q'(r)$. The other poles have moduli $1,1,r$, giving bounded
+coefficients. Moreover
+$Q'(r)=(r-r^{-1})(r^2+(\beta-1)r+1)>0$.
+This explains the square substitution in A400645 without identifying
+its rounded squares with the distinct sequence $u_n$.
+
+\begin{corollary}\label{cor:reverse}
+The unique extension of $u_n$ to all integer indices satisfies
+$u_n=-u_{2-n}$, the identity recorded by Michael Somos (July 25, 2025)
+in A116732, revision 33, FORMULA.
+\end{corollary}
+\begin{proof}
+The recurrence has invertible last coefficient, so determines the
+extension uniquely, with $u_{-1}=-1$. Its palindromic characteristic
+polynomial makes $-u_{2-n}$ another solution; its values at $n=0,1,2,3$
+are $0,0,0,1$. Uniqueness proves the identity.
+\end{proof}
+
+\begin{corollary}\label{cor:kimberling}
+The increasing-sequence conjecture in Kimberling's A289916, revision 11,
+COMMENTS, holds: its coefficients $v_n$ are strictly increasing for
+$n\ge0$. Moreover $v_n=D r^n+O(1)$ for some $D>0$, so their
+consecutive-ratio limit is the number defined in A289917 \cite{kimberling}.
+\end{corollary}
+\begin{proof}
+Colin Barker's July 19, 2017 formula in A289916 gives
+\[
+ F(z)=\sum_{n\ge0}v_nz^n
+ =\frac{(1+z)^2(1-z+z^2-z^3+z^4-z^5+z^6)}
+ {(1-z+z^2)Q(z)}
+ =\frac{(1+z)^2(1+z^7)}{(1+z^3)Q(z)}.
+\]
+For completeness, this formula follows directly from its NAME:
+if $w_k=\operatorname{round}(9(k+1)/7)$, then $w_{k+7}=w_k+9$ and
+$(w_0,\ldots,w_6)=(1,3,4,5,6,8,9)$.
+Consequently
+\[
+ \sum_{k\ge0}w_kt^k
+ =\frac{1+2t+t^2+t^3+t^4+2t^5+t^6}{(1-t)(1-t^7)}.
+\]
+Substitute $t=-z$ and invert; cancellation gives $F$ above.
+Now let $H(z)=1/((1+z^3)Q(z))=\sum h_nz^n$, with $h_n=0$ for $n<0$.
+Since
+\[
+ (1+z^3)Q(z)=1-z-z^2-z^5-z^6+z^7,
+\]
+one has $h_0=1$ and, for $n\ge1$,
+\[
+ h_n-h_{n-1}=h_{n-2}+h_{n-5}+h_{n-6}-h_{n-7}.
+\]
+Induction shows that $h_n$ is nondecreasing, and strictly increasing
+for $n\ge2$: the right side is nonnegative and contains
+$h_{n-2}\ge1$ then. Multiplication by $(1+z)^2(1+z^7)$ preserves
+nonnegative differences; for $n=1$, $v_1-v_0=2$, and for $n\ge2$
+the $h_n$ summand gives strictness. This proves the conjecture,
+whose exact wording is ``Conjecture: the sequence is strictly increasing.''
+
+The first expression for $F$ has simple denominator roots: those of
+$Q$ and the two roots of $1-z+z^2$; these sets are disjoint since
+$Q(\zeta)=3(1-\zeta)\ne0$ for $\zeta^2-\zeta+1=0$.
+At $z=1/r$ its numerator and the quadratic factor are positive and
+$Q'(1/r)=-Q'(r)/r^2<0$. Thus the coefficient of $(1-rz)^{-1}$
+is positive. The other poles have modulus at least one, so partial
+fractions give $v_n=D r^n+O(1)$.
+\end{proof}
+
+\begin{corollary}\label{cor:descartes}
+For real $y\ne0$,
+\[
+ \left(\sum_{i=0}^3y^{-i}\right)^2-3\sum_{i=0}^3y^{-2i}
+ =-\frac{2(y^2+1)Q(y)}{y^6}.
+\]
+Consequently the largest real solution of the left side equal to zero
+is $r$. This proves the algebraic identity recorded by Charles L. Hohn
+(November 13, 2025), A289917, revision 48, FORMULA.
+\end{corollary}
+\begin{proof}
+Multiplication by $y^6$ and expansion give the displayed identity;
+$y^2+1>0$ and the factorization of $Q$ give the root assertion.
+\end{proof}
+
+\subsection*{Coverage of the posing source and its companions}
+All ``Proved'' labels below refer to statements actually asserted or
+conjectured in the indicated source. Further statements are identified
+as extensions or as not asserted.
+{\small
+\begin{longtable}{@{}p{.29\linewidth}p{.65\linewidth}@{}}
+\toprule
+Source item & Mathematical coverage\\\midrule
+A400645, rev. 21, NAME / Mathematica / COMMENTS &
+Proved: suggested ratio limit for the specified initial data,
+Theorem~\ref{thm:main}. Not posed; proved: bounded absolute error and
+exponential ratio convergence, Corollary~\ref{cor:bounded}.\\
+A063827, rev. 12, COMMENTS &
+Proved: the asserted square-root golden-ratio limit,
+Corollary~\ref{cor:norm}. Its initial data are $(1,2)$ \cite{two}.\\
+A400644, rev. 28, COMMENTS &
+Proved: the suggested square-root tribonacci limit,
+Corollary~\ref{cor:norm}. Its positive-index initial data are $(0,0,1)$
+\cite{three}.\\
+Nondecreasing initial-data extension for $m=2,3$ &
+Not posed; proved under the explicit size hypotheses of
+Corollary~\ref{cor:norm}. The all-one two-term sequence is stationary.\\
+Large nondecreasing data for the signed rule &
+Not posed; proved when the last of the four initial terms is at least
+$292$, Corollary~\ref{cor:large}.\\
+A289917, rev. 48, FORMULA &
+Prior identities cited and proved: Kotesovec's radical (2021),
+Vepstas's quartic root (2024), and Hohn's sum identity (2025);
+\eqref{eq:constant} and Corollary~\ref{cor:descartes}.\\
+A289916, rev. 11, COMMENTS / FORMULA &
+Proved: Kimberling's strictly increasing conjecture.
+Barker's rational generating function (2017) is cited and derived;
+Corollary~\ref{cor:kimberling} also proves the ratio used in
+A289917's NAME.\\
+A116732, rev. 33, NAME / FORMULA &
+Prior recurrence and generating function cited; positive asymptotic
+proved above. Somos's reversal identity (2025) is cited and reproved
+in Corollary~\ref{cor:reverse}.\\
+A116732, rev. 33, COMMENTS / EXAMPLE &
+Not covered: unspecified ``expected divisibility properties'' and
+the partially ordered partition interpretation.\\
+A289917, rev. 48, COMMENTS; other geometric cross-references &
+Not covered: kissing-sphere geometry, radius interpretation and
+the related geometric configurations.\\
+Arbitrary positive data for the signed four-term rule &
+Not asserted in the source; fails for the all-one sequence, whose
+ratio is one. This is not a refutation of A400645.\\
+\bottomrule
+\end{longtable}}
+The initial conditions matter: the constant sequence $a_n=1$ satisfies
+the same four-term rule, since $\operatorname{round}\sqrt2=1$, and has
+ratio one. Thus Theorem~\ref{thm:main} is not a statement about every
+positive initial tuple.
+
+\paragraph{Verification coverage.}
+The pinned Lean file
+\href{https://github.com/the-omega-institute/trureturing/blob/6974dba01daa1a25cc74b87a86c191e95fe2c681/D5/S1/Recurrence/OEISA400645.lean}{\texttt{D5/S1/Recurrence/OEISA400645.lean}}
+contains the declaration
+\texttt{D5.S1.Recurrence.OEISA400645.result} with statement
+\texttt{claim}: existence for \texttt{IsSourceSequence}, the
+consecutive-ratio limit for every sequence satisfying it, and the largest
+real-root characterization. The positive asymptotic appears in its
+private lemma \texttt{square\_asymptotic}. The arguments above supply
+written proofs of the bounded-error refinement, fixed-lag limits,
+general initial-data extension, and algebraic companion corollaries.
+The second pinned Lean file,
+\href{https://github.com/the-omega-institute/trureturing/blob/6974dba01daa1a25cc74b87a86c191e95fe2c681/D5/S1/Recurrence/OEISA400644.lean}{\texttt{D5/S1/Recurrence/OEISA400644.lean}},
+has declaration \texttt{D5.S1.Recurrence.OEISA400644.result},
+with statement \texttt{targetClaim}:
+existence and uniqueness for its positive-index initial data, positivity,
+the infinite consecutive-ratio limit, and its largest-positive-sextic-root
+characterization. It does not state the general initial-data or
+bounded-error extensions. The two-term and A289916 statements have written
+proofs here. The accompanying integer-arithmetic checker tests 512 terms
+of each rounded sequence, the displayed source terms, the main seed and
+rational constants, the companion identities and monotonicity; those
+finite tests are distinct from the infinite proofs.
+
+\begin{thebibliography}{9}
+\bibitem{bernath} B. Bern\'ath.
+OEIS A400645, revision 21, NAME, COMMENTS, Mathematica and CROSSREFS
+fields; authored October 2, 2026.
+\url{https://oeis.org/A400645}.
+\bibitem{constant} C. Kimberling.
+OEIS A289917, revision 48, FORMULA field, with contributions by
+V. Kotesovec (August 27, 2021) and L. Vepstas (February 6, 2024).
+\url{https://oeis.org/A289917}.
+\bibitem{linear} R. K. Guy.
+OEIS A116732, revision 33, NAME and FORMULA fields.
+\url{https://oeis.org/A116732}.
+\bibitem{two} H. Bottomley.
+OEIS A063827, revision 12, NAME and COMMENTS fields.
+\url{https://oeis.org/A063827}.
+\bibitem{three} B. Bern\'ath.
+OEIS A400644, revision 28, NAME and COMMENTS fields.
+\url{https://oeis.org/A400644}.
+\bibitem{kimberling} C. Kimberling.
+OEIS A289916, revision 11, NAME, COMMENTS and FORMULA fields;
+authored July 18, 2017, with formulas by C. Barker (July 19, 2017).
+\url{https://oeis.org/A289916}.
+\end{thebibliography}
+\medskip
+\noindent\small Licensed under Creative Commons Attribution 4.0
+International (CC BY 4.0).
+\end{document}

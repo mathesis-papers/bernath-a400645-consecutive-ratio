@@ -1,0 +1,14 @@
+{
+  "schema": "mathesis.materials.v1",
+  "work": "bernath-a400645-consecutive-ratio",
+  "version": 2,
+  "repository_url": "https://github.com/mathesis-papers/bernath-a400645-consecutive-ratio",
+  "site_url": "https://papers.trureturing.org/bernath-a400645-consecutive-ratio/",
+  "doi": null,
+  "reading": {
+    "en": "https://papers.trureturing.org/bernath-a400645-consecutive-ratio/en/",
+    "zh": "https://papers.trureturing.org/bernath-a400645-consecutive-ratio/zh/"
+  },
+  "slides": [],
+  "visualizations": []
+}

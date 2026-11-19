@@ -1,0 +1,15 @@
+{
+  "id": "bernath-a400645-consecutive-ratio",
+  "revision": 2,
+  "problem_ids": ["bernath-a400645", "oeis-a400644-rounded-three-term-norm"],
+  "topic": "Bernáth's consecutive-ratio conjecture in OEIS A400645, revision 21, COMMENTS",
+  "title": "Bounded-error asymptotics for Bernáth's conjecture: OEIS A400645, revision 21, COMMENTS, and its rounded-norm siblings",
+  "creators": [
+    {"name": "Ma, Haobo", "affiliation": "ChronoAI Pte Ltd, Singapore"},
+    {"name": "Zhang, Wenlin", "affiliation": "National University of Singapore; ChronoAI Pte Ltd, Singapore"}
+  ],
+  "abstract": "For Bernáth's consecutive-ratio conjecture in OEIS A400645, revision 21, COMMENTS, we prove the stronger bounded-error asymptotic a_n=c lambda^n+O(1) with c>0, where lambda is the largest real root of x^8-x^6-x^4-x^2+1, namely 1.3122819079.... The squared terms satisfy a linear recurrence with a controlled rounding error. A finite seed bounds its entire normalized error tail and ensures a positive leading coefficient; a three-coordinate contraction then gives an exponential asymptotic. The same error analysis proves the ratio assertions for A063827 and A400644, and extends them to nondecreasing initial data. We also prove the increasing-sequence conjecture in A289916 and recover its limiting ratio, identified in A289917.",
+  "summary": "The signed rounded recurrence A400645 has bounded absolute error from a positive exponential; its consecutive ratios converge exponentially. The note also proves the two- and three-term positive-norm ratio assertions for general nondecreasing initial data, A289916 strict increase and its ratio limit, and the recorded A116732 reversal and A289917 algebraic identities. Written proofs, exact finite checks and the scopes of two pinned Lean declarations are identified separately.",
+  "license": "cc-by-4.0",
+  "evidence_url": "https://github.com/the-omega-institute/trureturing/blob/6974dba01daa1a25cc74b87a86c191e95fe2c681/D5/S1/Recurrence/OEISA400645.lean"
+}

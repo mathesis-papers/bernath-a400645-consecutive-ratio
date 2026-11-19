@@ -1,0 +1,55 @@
+{
+  "status": "ALL_CHECKS_OK",
+  "terms_checked": 512,
+  "oeis_terms_matched": 51,
+  "seed": {
+    "index": 26,
+    "value": 324
+  },
+  "positivity_margin_lower_bound": "73872/17",
+  "signed_large_data_threshold": {
+    "last_initial_term": 292,
+    "margin_lower_bound": "1168/17"
+  },
+  "squared_limit_interval": [
+    "1722083805739/1000000000000",
+    "86104190287/50000000000"
+  ],
+  "limiting_ratio_decimal": "1.3122819078761400972586326080198960086887018232186573206403071679",
+  "observed_ratio_a512_over_a511": "1.3122819078761400972586326080198960086887018232186573206403061950",
+  "siblings": {
+    "A063827": {
+      "terms_checked": 512,
+      "source_terms_matched": 49
+    },
+    "A400644": {
+      "terms_checked": 512,
+      "source_terms_matched": 49
+    },
+    "A289916": {
+      "terms_checked": 512,
+      "source_terms_matched": 37,
+      "strictly_increasing": true
+    },
+    "positive_norm_seeds": [
+      {
+        "width": 2,
+        "zero_based_index": 11,
+        "value": 21,
+        "margin_lower_bound": "21"
+      },
+      {
+        "width": 3,
+        "zero_based_index": 17,
+        "value": 57,
+        "margin_lower_bound": "969"
+      }
+    ],
+    "A116732_reversal_range": [
+      -512,
+      512
+    ],
+    "algebraic_identities": "exact coefficient equalities"
+  },
+  "coverage": "Exact finite rounding, growth, projection, source-term and algebraic checks; infinite asymptotics, general initial data and monotonicity are proved in note.tex."
+}

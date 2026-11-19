@@ -1,0 +1,66 @@
+{
+  "files": {
+    "pdf": {
+      "bytes": 96654,
+      "matches_public": true,
+      "path": "paper.pdf",
+      "public_sha256": "7a15c57500130e96a01364fccdd01ccb2a7df0f9529794e4c2d65f2ce72c7f30",
+      "sha256": "7a15c57500130e96a01364fccdd01ccb2a7df0f9529794e4c2d65f2ce72c7f30"
+    },
+    "source": {
+      "bytes": 16091,
+      "matches_public": true,
+      "path": "source.archive",
+      "public_sha256": "bb986e83deca047e90fd9cfcff9748793e775e7d148ad89790862c2beb391c88",
+      "sha256": "bb986e83deca047e90fd9cfcff9748793e775e7d148ad89790862c2beb391c88"
+    }
+  },
+  "source_identity": "Mathesis public projection",
+  "work": {
+    "abstract_text": "For Bernáth's consecutive-ratio conjecture in OEIS A400645, revision 21, COMMENTS, we prove the stronger bounded-error asymptotic a_n=c lambda^n+O(1) with c>0, where lambda is the largest real root of x^8-x^6-x^4-x^2+1, namely 1.3122819079.... The squared terms satisfy a linear recurrence with a controlled rounding error. A finite seed bounds its entire normalized error tail and ensures a positive leading coefficient; a three-coordinate contraction then gives an exponential asymptotic. The same error analysis proves the ratio assertions for A063827 and A400644, and extends them to nondecreasing initial data. We also prove the increasing-sequence conjecture in A289916 and recover its limiting ratio, identified in A289917.",
+    "authors": [
+      {
+        "affiliation": "ChronoAI Pte Ltd, Singapore",
+        "name": "Haobo Ma"
+      },
+      {
+        "affiliation": "National University of Singapore; ChronoAI Pte Ltd, Singapore",
+        "name": "Wenlin Zhang"
+      }
+    ],
+    "concept_doi": null,
+    "current_version": 2,
+    "doi": null,
+    "lean_source": {
+      "revision": "6974dba01daa1a25cc74b87a86c191e95fe2c681",
+      "url": "https://github.com/the-omega-institute/trureturing/blob/6974dba01daa1a25cc74b87a86c191e95fe2c681/D5/S1/Recurrence/OEISA400645.lean"
+    },
+    "license": "CC-BY-4.0",
+    "msc": [],
+    "pdf": {
+      "bytes": 96654,
+      "sha256": "7a15c57500130e96a01364fccdd01ccb2a7df0f9529794e4c2d65f2ce72c7f30",
+      "url": "/api/v1/collected-papers/bernath-a400645-consecutive-ratio/files/pdf?version=2"
+    },
+    "previous_version": null,
+    "publication": "public",
+    "published_on": "2026-11-19T12:54:34.235716266Z",
+    "record": "bernath-a400645-consecutive-ratio",
+    "repository_name": "bernath-a400645-consecutive-ratio",
+    "source": {
+      "bytes": 16091,
+      "sha256": "bb986e83deca047e90fd9cfcff9748793e775e7d148ad89790862c2beb391c88",
+      "url": "/api/v1/collected-papers/bernath-a400645-consecutive-ratio/files/source?version=2"
+    },
+    "title": "Bounded-error asymptotics for Bernáth's conjecture: OEIS A400645, revision 21, COMMENTS, and its rounded-norm siblings",
+    "versions": [
+      {
+        "previous_version": null,
+        "published_on": "2026-11-19T12:54:34.235716266Z",
+        "revision": "2",
+        "version": 2
+      }
+    ],
+    "work": "bernath-a400645-consecutive-ratio"
+  }
+}

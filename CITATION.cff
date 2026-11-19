@@ -1,0 +1,10 @@
+cff-version: 1.2.0
+message: "If you use this work, cite it."
+title: "Bounded-error asymptotics for Bernáth's conjecture: OEIS A400645, revision 21, COMMENTS, and its rounded-norm siblings"
+authors:
+  - name: "Haobo Ma"
+  - name: "Wenlin Zhang"
+date-released: "2026-11-19"
+version: "2"
+url: "https://mathesis-omega-research.apps.chrono-ai.fun/papers/bernath-a400645-consecutive-ratio?version=2"
+license: "CC-BY-4.0"
