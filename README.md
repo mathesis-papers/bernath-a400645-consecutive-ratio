@@ -5,13 +5,15 @@
 For Bernáth's consecutive-ratio conjecture in OEIS A400645, revision 21, COMMENTS, we prove the stronger bounded-error asymptotic a_n=c lambda^n+O(1) with c>0, where lambda is the largest real root of x^8-x^6-x^4-x^2+1, namely 1.3122819079.... The squared terms satisfy a linear recurrence with a controlled rounding error. A finite seed bounds its entire normalized error tail and ensures a positive leading coefficient; a three-coordinate contraction then gives an exponential asymptotic. The same error analysis proves the ratio assertions for A063827 and A400644, and extends them to nondecreasing initial data. We also prove the increasing-sequence conjecture in A289916 and recover its limiting ratio, identified in A289917.
 
 - PDF: [frozen public file](paper.pdf)
+- DOI: [https://doi.org/10.5281/zenodo.24369110](https://doi.org/10.5281/zenodo.24369110)
+- Concept DOI: [https://doi.org/10.5281/zenodo.24369109](https://doi.org/10.5281/zenodo.24369109)
 - License: CC-BY-4.0
 - Version: 2
 - Mathesis record: [bernath-a400645-consecutive-ratio](https://mathesis-omega-research.apps.chrono-ai.fun/papers/bernath-a400645-consecutive-ratio?version=2)
 
 ## How to cite
 
-Haobo Ma, Wenlin Zhang (2026). Bounded-error asymptotics for Bernáth's conjecture: OEIS A400645, revision 21, COMMENTS, and its rounded-norm siblings. Mathesis, version 2. https://mathesis-omega-research.apps.chrono-ai.fun/papers/bernath-a400645-consecutive-ratio?version=2
+Haobo Ma, Wenlin Zhang (2026). Bounded-error asymptotics for Bernáth's conjecture: OEIS A400645, revision 21, COMMENTS, and its rounded-norm siblings. Mathesis, version 2. https://doi.org/10.5281/zenodo.24369110
 
 ## Statement progress
 
